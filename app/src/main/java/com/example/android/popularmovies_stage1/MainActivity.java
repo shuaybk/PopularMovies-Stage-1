@@ -8,10 +8,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.android.popularmovies_stage1.utilities.JsonUtils;
 import com.example.android.popularmovies_stage1.utilities.NetworkUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView mMainText;
     Button mRefreshButton;
+    ArrayList<Movie> movieList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
         mMainText = (TextView) findViewById(R.id.tv_main_text);
         mRefreshButton = (Button) findViewById(R.id.button_refresh);
+
+        movieList = new ArrayList<Movie>();
 
         mRefreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +46,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void setMovieData(String json) {
+        try {
+            JSONObject jsonData = new JSONObject(json);
+            JSONArray jsonMovieList = jsonData.getJSONArray("results");
+            movieList.clear();
+
+            for (int i = 0; i < jsonMovieList.length(); i++) {
+                movieList.add(JsonUtils.parseMovieJson(jsonMovieList.getJSONObject(i)));
+            }
+
+            String temp = "";
+            for (Movie movie: movieList) {
+                temp = temp + ", " + movie.getTitle();
+            }
+            mMainText.setText(temp);
+
+        } catch(JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public class MovieQueryTask extends AsyncTask<URL, Void, String> {
 
@@ -63,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 mMainText.setText("Error occured!");
             } else {
                 mMainText.setText(queryResults);
+                setMovieData(queryResults);
             }
         }
     }

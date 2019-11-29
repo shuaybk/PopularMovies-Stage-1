@@ -13,10 +13,21 @@ import java.util.Scanner;
 
 public class NetworkUtils {
 
-    final static String BASE_URL = "https://api.themoviedb.org/3/movie/550?api_key=" + MainActivity.API_KEY;
+    final static String MOVIEDB_POPULAR_BASE_URL = "https://api.themoviedb.org/3/movie/popular";
+    final static String PARAM_API_KEY = "api_key";
+    final static String PARAM_LANGUAGE = "language";
+    final static String PARAM_PAGES = "page";
+
+    final static String lang = "en-US";
+    final static String pagesToDisplay = "1";
+
 
     public static URL buildURL(String searchQuery) {
-        Uri builtUri = Uri.parse(BASE_URL);
+        Uri builtUri = Uri.parse(MOVIEDB_POPULAR_BASE_URL).buildUpon()
+                .appendQueryParameter(PARAM_API_KEY, MainActivity.API_KEY)
+                .appendQueryParameter(PARAM_LANGUAGE, lang)
+                .appendQueryParameter(PARAM_PAGES, pagesToDisplay)
+                .build();
 
         URL url = null;
         try {
