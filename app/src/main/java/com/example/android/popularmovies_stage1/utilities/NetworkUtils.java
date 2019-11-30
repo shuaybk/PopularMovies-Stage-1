@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class NetworkUtils {
 
     final static String MOVIEDB_POPULAR_BASE_URL = "https://api.themoviedb.org/3/movie/popular";
+    final static String MOVIEDB_RATING_BASE_URL = "https://api.themoviedb.org/3/movie/top_rated";
     final static String PARAM_API_KEY = "api_key";
     final static String PARAM_LANGUAGE = "language";
     final static String PARAM_PAGES = "page";
@@ -22,8 +23,15 @@ public class NetworkUtils {
     final static String pagesToDisplay = "1";
 
 
-    public static URL getURL() {
-        Uri builtUri = Uri.parse(MOVIEDB_POPULAR_BASE_URL).buildUpon()
+    //sortBy = 1 for popular, sortBy = 2 for rating
+    public static URL getURL(int sortBy) {
+
+        String base_url = MOVIEDB_POPULAR_BASE_URL;
+        if (sortBy == 2) {
+            base_url = MOVIEDB_RATING_BASE_URL;
+        }
+
+        Uri builtUri = Uri.parse(base_url).buildUpon()
                 .appendQueryParameter(PARAM_API_KEY, MainActivity.API_KEY)
                 .appendQueryParameter(PARAM_LANGUAGE, lang)
                 .appendQueryParameter(PARAM_PAGES, pagesToDisplay)

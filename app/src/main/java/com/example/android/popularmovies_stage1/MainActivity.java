@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+
 import com.example.android.popularmovies_stage1.utilities.JsonUtils;
 import com.example.android.popularmovies_stage1.utilities.NetworkUtils;
 import org.json.JSONArray;
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView mRecyclerViewMovies;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +39,40 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerViewMovies = (RecyclerView) findViewById(R.id.recyclerview_movies);
 
-        URL url = NetworkUtils.getURL();
+        refreshList(1);
+
+        setTitle("PopularMovies");
+    }
+
+    private void refreshList(int sortBy) {
+        URL url = NetworkUtils.getURL(sortBy);
         new MovieQueryTask().execute(url);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_sort_popular:
+                Toast.makeText(this, "Sorting by popularity", Toast.LENGTH_LONG).show();
+                refreshList(1);
+                return true;
+            case R.id.action_sort_rating:
+                Toast.makeText(this, "Sorting by top rated", Toast.LENGTH_LONG).show();
+                refreshList(2);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+
 
     //Called when the query to themoviedb returns a result
     public void setMovieData(String json) {
