@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -53,9 +56,16 @@ public class MainActivity extends AppCompatActivity {
         setTitle("PopularMovies");
     }
 
+    //Fetch data online and refresh the list if there is an internet connection, otherwise display error
     private void refreshList(int sortBy) {
-        URL url = NetworkUtils.getURL(sortBy);
-        new MovieQueryTask().execute(url);
+        if (isConnectedToInternet()) {
+            URL url = NetworkUtils.getURL(sortBy);
+            new MovieQueryTask().execute(url);
+        } else {
+            mRecyclerViewMovies.setVisibility(View.INVISIBLE);
+            mErrorMessage.setVisibility(View.VISIBLE);
+            Toast.makeText(this, "Error: No Internet Connection!", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -108,6 +118,16 @@ public class MainActivity extends AppCompatActivity {
         int imageWidth = 342;
         int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
         return screenWidth/imageWidth;
+    }
+
+    public boolean isConnectedToInternet() {
+        ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if (netInfo == null) {
+            return false;
+        }
+        return true;
     }
 
 
