@@ -9,6 +9,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.popularmovies_stage1.utilities.JsonUtils;
@@ -25,9 +28,12 @@ public class MainActivity extends AppCompatActivity {
     public static final String API_KEY = "";  //themoviedb.org API Key, replace with your own to make this app work
     public static final int IMAGE_WIDTH = 342; //Choices are 92, 154, 185, 342, 500, 780
 
-    ArrayList<Movie> movieList;
+    private ArrayList<Movie> movieList;
 
-    RecyclerView mRecyclerViewMovies;
+    private RecyclerView mRecyclerViewMovies;
+
+    private ProgressBar mLoadingIndicator;
+    private TextView mErrorMessage;
 
 
     @Override
@@ -38,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         movieList = new ArrayList<Movie>();
 
         mRecyclerViewMovies = (RecyclerView) findViewById(R.id.recyclerview_movies);
+
+        mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
+        mErrorMessage = (TextView) findViewById(R.id.tv_error_message);
 
         refreshList(1);
 
@@ -69,10 +78,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
 
     //Called when the query to themoviedb returns a result
     public void setMovieData(String json) {
@@ -111,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            mLoadingIndicator.setVisibility(View.VISIBLE);
+            mRecyclerViewMovies.setVisibility(View.INVISIBLE);
         }
 
         @Override
@@ -128,10 +135,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String queryResults) {
             if (queryResults == null) {
-                //error happened
+                mErrorMessage.setVisibility(View.VISIBLE);
+                mRecyclerViewMovies.setVisibility(View.INVISIBLE);
             } else {
+                mErrorMessage.setVisibility(View.INVISIBLE);
+                mRecyclerViewMovies.setVisibility(View.VISIBLE);
                 setMovieData(queryResults);
             }
+            mLoadingIndicator.setVisibility(View.INVISIBLE);
         }
     }
 }
