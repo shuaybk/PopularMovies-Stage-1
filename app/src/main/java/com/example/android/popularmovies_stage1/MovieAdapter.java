@@ -38,7 +38,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         final String movieTitle = movieList.get(position).getTitle();
 
         Picasso.get().load(movieList.get(position).getPoster()).into(holder.mIvPoster);
-        System.out.println(movieList.get(position).getPoster());
+
 
         holder.mLiParentLayout.setOnClickListener(new View.OnClickListener() {
             @Override

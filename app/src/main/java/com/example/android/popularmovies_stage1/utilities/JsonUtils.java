@@ -1,5 +1,6 @@
 package com.example.android.popularmovies_stage1.utilities;
 
+import com.example.android.popularmovies_stage1.MainActivity;
 import com.example.android.popularmovies_stage1.Movie;
 
 import org.json.JSONException;
@@ -7,8 +8,8 @@ import org.json.JSONObject;
 
 public class JsonUtils {
 
-    private static final String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/";
-    private static final String IMAGE_SIZE = "w185";
+    public static final String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/";
+    public static final String IMAGE_SIZE = "w" + MainActivity.IMAGE_WIDTH;
 
     public static Movie parseMovieJson (JSONObject json) {
         Movie movie = null;
