@@ -8,10 +8,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.popularmovies_stage1.utilities.JsonUtils;
 import com.example.android.popularmovies_stage1.utilities.NetworkUtils;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,7 +26,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     public static final String API_KEY = "";  //themoviedb.org API Key, replace with your own to make this app work
-
 
     ArrayList<Movie> movieList;
 

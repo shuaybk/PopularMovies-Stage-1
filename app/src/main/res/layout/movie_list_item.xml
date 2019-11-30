@@ -5,11 +5,9 @@
     android:orientation="vertical"
     android:id="@+id/li_parent_layout">
 
-    <TextView
-        android:id="@+id/tv_li_title"
+    <ImageView
+        android:id="@+id/iv_li_poster"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="25dp"
-        android:textSize="30dp" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

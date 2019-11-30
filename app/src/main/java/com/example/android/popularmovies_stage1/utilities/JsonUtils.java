@@ -7,11 +7,14 @@ import org.json.JSONObject;
 
 public class JsonUtils {
 
+    private static final String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/";
+    private static final String IMAGE_SIZE = "w185";
+
     public static Movie parseMovieJson (JSONObject json) {
         Movie movie = null;
         try {
             String title = json.getString("title");
-            String poster = json.getString("poster_path");
+            String poster = BASE_IMAGE_URL + IMAGE_SIZE + json.getString("poster_path");
             String description = json.getString("overview");
             String releaseDate = json.getString("release_date");
 

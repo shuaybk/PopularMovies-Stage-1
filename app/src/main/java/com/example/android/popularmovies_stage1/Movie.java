@@ -1,6 +1,9 @@
 package com.example.android.popularmovies_stage1;
 
 public class Movie {
+
+
+
     private String title;
     private String poster;
     private String description;

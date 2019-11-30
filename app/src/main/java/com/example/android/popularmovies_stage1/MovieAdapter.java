@@ -4,11 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -33,8 +36,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         final String movieTitle = movieList.get(position).getTitle();
-        holder.mLiTitle.setText(movieTitle);
 
+        Picasso.get().load(movieList.get(position).getPoster()).into(holder.mIvPoster);
+        System.out.println(movieList.get(position).getPoster());
 
         holder.mLiParentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,12 +55,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mLiTitle;
+        ImageView mIvPoster;
         LinearLayout mLiParentLayout;
 
         public MovieViewHolder(View itemView) {
             super(itemView);
-            mLiTitle = (TextView) itemView.findViewById(R.id.tv_li_title);
+            mIvPoster = (ImageView) itemView.findViewById(R.id.iv_li_poster);
             mLiParentLayout = (LinearLayout) itemView.findViewById(R.id.li_parent_layout);
         }
     }
