@@ -22,7 +22,7 @@ public class NetworkUtils {
     final static String pagesToDisplay = "1";
 
 
-    public static URL buildURL(String searchQuery) {
+    public static URL getURL() {
         Uri builtUri = Uri.parse(MOVIEDB_POPULAR_BASE_URL).buildUpon()
                 .appendQueryParameter(PARAM_API_KEY, MainActivity.API_KEY)
                 .appendQueryParameter(PARAM_LANGUAGE, lang)

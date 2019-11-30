@@ -1,6 +1,7 @@
 package com.example.android.popularmovies_stage1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,15 +36,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-        final String movieTitle = movieList.get(position).getTitle();
+        final Movie movie = movieList.get(position);
 
-        Picasso.get().load(movieList.get(position).getPoster()).into(holder.mIvPoster);
-
+        Picasso.get().load(movie.getPoster()).into(holder.mIvPoster);
 
         holder.mLiParentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, movieTitle, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(mContext, MovieDetails.class);
+                intent.putExtra(Intent.EXTRA_COMPONENT_NAME, movie);
+                mContext.startActivity(intent);
             }
         });
     }

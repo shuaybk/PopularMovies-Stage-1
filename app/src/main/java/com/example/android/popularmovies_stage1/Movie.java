@@ -1,22 +1,26 @@
 package com.example.android.popularmovies_stage1;
 
-public class Movie {
+import java.io.Serializable;
+
+public class Movie implements Serializable {
 
 
 
     private String title;
     private String poster;
     private String description;
+    private int rating;  // store as x10 to make it a percentage
     private String releaseDate;
 
     public Movie() {
 
     }
 
-    public Movie(String mTitle, String mPoster, String mDescription, String mReleaseDate) {
+    public Movie(String mTitle, String mPoster, String mDescription, int mRating, String mReleaseDate) {
         this.title = mTitle;
         this.poster = mPoster;
         this.description = mDescription;
+        this.rating = mRating;
         this.releaseDate = mReleaseDate;
     }
 
@@ -42,6 +46,14 @@ public class Movie {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     public String getReleaseDate() {

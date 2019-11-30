@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerViewMovies = (RecyclerView) findViewById(R.id.recyclerview_movies);
 
-        URL url = NetworkUtils.buildURL("lol fake query info");
+        URL url = NetworkUtils.getURL();
         new MovieQueryTask().execute(url);
     }
 

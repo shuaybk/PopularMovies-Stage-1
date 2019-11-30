@@ -14,12 +14,13 @@ public class JsonUtils {
     public static Movie parseMovieJson (JSONObject json) {
         Movie movie = null;
         try {
-            String title = json.getString("title");
+            String title = json.getString("original_title");
             String poster = BASE_IMAGE_URL + IMAGE_SIZE + json.getString("poster_path");
             String description = json.getString("overview");
+            int rating = (int)(json.getDouble("vote_average")*10);
             String releaseDate = json.getString("release_date");
 
-            movie = new Movie(title, poster, description, releaseDate);
+            movie = new Movie(title, poster, description, rating, releaseDate);
         } catch(JSONException e) {
             e.printStackTrace();
         }
